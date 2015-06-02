@@ -38,30 +38,34 @@ cc_test(
 )
 
 proto_library(
-    name = 'unittest_proto',
-    srcs = 'unittest.proto',
+    name = 'proto_json_format_test_proto',
+    srcs = 'proto_json_format_test.proto',
 )
 
 cc_library(
     name = 'proto_json_format',
     srcs = 'proto_json_format.cpp',
-    deps = ['//thirdparty/glog:glog',
-            '//thirdparty/jsoncpp:jsoncpp',
-            '//thirdparty/protobuf:protobuf',
-           ],
+    deps = [
+        '//toft/base/string:string',
+        '//thirdparty/glog:glog',
+        '//thirdparty/jsoncpp:jsoncpp',
+        '//thirdparty/protobuf:protobuf',
+    ],
 )
 
 cc_test(
-    name = 'proto_json_format_unittest',
-    srcs = 'proto_json_format_unittest.cpp',
-    deps = [':proto_json_format',
-            ':unittest_proto',
-            '//toft/storage/file:file',
-           ],
-    testdata = ['debug_string.txt',
-                'json_fast_string.txt',
-                'json_styled_string.txt',
-               ]
+    name = 'proto_json_format_test',
+    srcs = 'proto_json_format_test.cpp',
+    deps = [
+        ':proto_json_format',
+        ':proto_json_format_test_proto',
+        '//toft/storage/file:file',
+    ],
+    testdata = [
+        'debug_string.txt',
+        'json_fast_string.txt',
+        'json_styled_string.txt',
+    ],
 )
 
 cc_test(
